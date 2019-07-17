@@ -44,7 +44,7 @@ app.get('/apps', (req, res) => {
   
     if (validSorts.includes(sort)) {
      
-      filteredApps.sort((a, b) => a[sort] < b[sort] ? 1 : -1);
+      filteredApps.sort((a, b) => a[sort] > b[sort] ? 1 : -1);
     }
   }
 
