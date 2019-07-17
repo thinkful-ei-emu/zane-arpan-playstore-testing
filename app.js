@@ -18,11 +18,8 @@ app.get('/apps', (req, res) => {
   if (req.query.genres) {
     genres = req.query.genres.charAt(0).toUpperCase()+req.query.genres.slice(1);
   }
-  console.log(sort);
-  console.log(genres);
 
   if (!(req.query.genres) && !(sort)) {
-    console.log('no queries provided');
     res.status(200).json(filteredApps);
     return;
   }
@@ -30,26 +27,23 @@ app.get('/apps', (req, res) => {
   const validGenres = ['Action', 'Puzzle', 'Strategy', 'Casual', 'Arcade', 'Card'];
 
   const validSorts = ['Rating', 'App'];
-  console.log(validGenres.includes(genres));
-  console.log(validSorts.includes(sort));
 
   if((genres && !(validGenres.includes(genres))) || (sort && !(validSorts.includes(sort)))) {
-    res.status(404).json('Please enter a valid genre.');
+    res.status(404).json('Please enter a valid genre or sort method.');
     return;
   }
   else {
 
     if (validGenres.includes(genres)) {
-      console.log('filtering by genre');
-      console.log()
+    
       filteredApps = filteredApps.filter((app) => {
-        console.log(app['Genres']);
+        
         return app['Genres'].includes(genres);
       });
     }
   
     if (validSorts.includes(sort)) {
-      console.log('sorting apps');
+     
       filteredApps.sort((a, b) => a[sort] < b[sort] ? 1 : -1);
     }
   }
@@ -57,6 +51,4 @@ app.get('/apps', (req, res) => {
   res.status(200).json(filteredApps);
 });
 
-app.listen(8000, () => {
-  console.log('Server started on PORT 8000');
-});
+module.exports=app;
